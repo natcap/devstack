@@ -1,5 +1,10 @@
 # NatCap Development Stack
 
+The most recent image is tagged with `latest`.
+
+Images are also tagged with the date on which they are build.  For example: `ghcr.io/natcap/devstack:2022-11-17`.
+
+
 ## Docker
 
 ### Docker on Windows
