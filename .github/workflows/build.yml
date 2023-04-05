@@ -23,6 +23,11 @@ defaults:
     run:
         shell: bash -l {0}
 
+env:
+    # Customize this name if needed.
+    # The repo name is a very reasonable default!
+    CONTAINER_NAME: devstack
+
 jobs:
     build:
         name: Build containers
@@ -43,28 +48,28 @@ jobs:
             - name: Build docker
               run: |
                   cd docker && docker build \
-                        -t ghcr.io/${{ github.repository_owner }}/devstack:latest \
-                        -t ghcr.io/${{ github.repository_owner }}/devstack:${{ env.DATESTAMP_VERSION }} \
+                        -t ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:latest \
+                        -t ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:${{ env.DATESTAMP_VERSION }} \
                         .
 
             - name: Test that GDAL and InVEST import
               run: |
-                  docker run --rm ghcr.io/${{ github.repository_owner }}/devstack:latest python -c "from osgeo import gdal"
-                  docker run --rm ghcr.io/${{ github.repository_owner }}/devstack:latest python -m natcap.invest --version
+                  docker run --rm ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:latest python -c "from osgeo import gdal"
+                  docker run --rm ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:latest python -m natcap.invest --version
 
             - name: Push docker
               run: |
-                  docker push ghcr.io/${{ github.repository_owner }}/devstack:latest
-                  docker push ghcr.io/${{ github.repository_owner }}/devstack:${{ env.DATESTAMP_VERSION }}
+                  docker push ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:latest
+                  docker push ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:${{ env.DATESTAMP_VERSION }}
 
             - name: Build singularity
               run: |
                 docker run \
                     --rm \
-                    --volume $(pwd):/tmp/devstack \
-                    --workdir /tmp/devstack \
+                    --volume $(pwd):/tmp/${{ env.CONTAINER_NAME }} \
+                    --workdir /tmp/${{ env.CONTAINER_NAME }} \
                     --privileged \
-                    quay.io/singularity/singularity:v3.10.3 pull docker://ghcr.io/${{ github.repository_owner }}/devstack:${{ env.DATESTAMP_VERSION }}
+                    quay.io/singularity/singularity:v3.10.3 pull docker://ghcr.io/${{ github.repository_owner }}/${{ env.CONTAINER_NAME }}:${{ env.DATESTAMP_VERSION }}
 
             - uses: actions/upload-artifact@v3
               with:
