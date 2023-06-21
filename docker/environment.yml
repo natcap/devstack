@@ -12,3 +12,4 @@ dependencies:
     - cxx-compiler
     - jupyter
     - requests
+    - make
