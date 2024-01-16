@@ -3,7 +3,7 @@ channels:
     - conda-forge
 dependencies:
     - python=3.10
-    - natcap.invest==3.13.0
+    - natcap.invest==3.14.1
     - gdal
     - pygeoprocessing
     - pandas
