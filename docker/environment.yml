@@ -2,8 +2,8 @@ name: base
 channels:
     - conda-forge
 dependencies:
-    - python=3.10
-    - natcap.invest==3.14.1
+    - python=3.12
+    - natcap.invest==3.14.2
     - gdal
     - pygeoprocessing
     - pandas
@@ -13,3 +13,5 @@ dependencies:
     - jupyter
     - requests
     - make
+    - flask
+    - google-cloud-storage
