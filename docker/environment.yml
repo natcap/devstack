@@ -15,4 +15,3 @@ dependencies:
     - make
     - flask
     - google-cloud-storage
-    - tippecanoe
